@@ -367,6 +367,8 @@ class Avoid < Slick::BasicGame
         @resuming = true
         startCountdown()
       end
+    when Slick::Input::KEY_Q
+      @exit_game = true
     end
   end
 
@@ -375,6 +377,10 @@ class Avoid < Slick::BasicGame
     # game over, count down to when the game start
     countDown() if (inGame && (gameOver || resuming) && countdown)
 
+    if @exit_game
+      game_container.exit
+      return
+    end
 
     if (!gameOver && inGame && !paused)
       # manages the laser depletion

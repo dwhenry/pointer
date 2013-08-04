@@ -61,6 +61,8 @@ class SampleListener < LeapMotion::Listener
     # scale the y position to the game resolution
     y = 1000 - (3.0 * avgPos.getY)
 
+    x, y = normalize(x, y)
+
     # z-axis value for the laser
     z = avgPos.getZ.to_f
 
@@ -77,6 +79,33 @@ class SampleListener < LeapMotion::Listener
         avoid.stopShootLaser()
       end
     end
+  end
+
+
+  MIN_DIST = 5
+  MAX_DIST = 20
+  def normalize(x, y)
+    @prev_y ||= y
+    @prev_x ||= x
+
+    change_y = y - @prev_y
+    change_x = x - @prev_x
+
+    dir_y = change_y / change_y.abs
+    dir_x = change_x / change_x.abs
+
+    calc_y = [y, MAX_DIST * dir_y].max
+    calc_y = 0 if calc_y < (MIN_DIST * dir_y)
+
+    calc_x = [x, MAX_DIST * dir_x].max
+    calc_x = 0 if calc_x < (MIN_DIST * dir_x)
+
+    #puts "normalized: [#{x}, #{y}], [#{calc_x}, #{calc_y}], [#{x - calc_x}, #{y - calc_y}]"
+
+    @prev_y = calc_y
+    @prev_x = calc_x
+
+    [calc_x, calc_y]
   end
 end
 
