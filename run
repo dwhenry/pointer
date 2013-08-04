@@ -1,4 +1,9 @@
 #!/usr/bin/env jruby
 $LOAD_PATH << File.dirname(__FILE__) + "/lib"
 require "fighter"
-Avoid.main
+if ARGV.first == 'leap'
+  LeapControl.main
+else
+  Avoid.main
+end
+

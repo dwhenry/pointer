@@ -5,6 +5,11 @@ class Avoid < Slick::BasicGame
   SCREEN_W = 1280
   SCREEN_H = 768
 
+  # Mouse Control (for testing)=============================
+  attr_accessor :mouse
+
+  attr_reader :gameOver
+
   private
 
   # Images=================================================
@@ -24,9 +29,6 @@ class Avoid < Slick::BasicGame
 
   # Draws bounding boxes if true=========================
   attr_reader :diagnostics
-
-  # Mouse Control (for testing)=============================
-  attr_reader :mouse
 
   attr_reader :countdown
 
@@ -48,7 +50,7 @@ class Avoid < Slick::BasicGame
   # Key for high score for preferences
   HighScoreKey = "highscore"
 
-  attr_reader :gameOver, :menu, :inGame, :resuming
+  attr_reader :menu, :inGame, :resuming
 
   # Strings=================================================
   # Font to use
